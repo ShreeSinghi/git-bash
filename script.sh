@@ -47,7 +47,7 @@ if [[ $var -eq 1 ]]; then
 elif [[ $var -eq 2 ]]; then
   gpg --gen-key
   key=$(gpg --list-secret-keys --keyid-format=long | awk '/sec/{print $2}')
-  new=$(echo "$key" | tail -c 17)
+  new=$(echo "${key[@]}" | tail -c 17)
   gpg --armor --export "$new"
 
   setup $new
