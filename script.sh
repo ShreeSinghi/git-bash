@@ -1,11 +1,11 @@
 #!/bin/bash
 
 function setup(){
-  git config --global user.signingkey "$new"
+  git config --global user.signingkey "$1"
   git config --global commit.gpgsign true
 }
 
-while [[ 1 -eq 1 ]]
+while [[ 69 -eq 69 ]]
 do
 
 echo "1. Use an existing GPG key"
@@ -15,15 +15,8 @@ read -p "Enter your choice: " var
 
 if [[ $var -eq 1 ]]; then
   key=$(gpg --list-secret-keys --keyid-format=long|awk '/sec/{print $2}')
-  name=$(gpg --list-secret-keys --keyid-format=long|awk '/uid/{print $3}')
   declare -a keyarr
-  declare -a uidarr
   keylen=${#key}
-
-  for i in "${!key[@]}"; do
-    echo "$i ${name[i]}"
-  done
-
 
   j=0
   k=0
@@ -49,7 +42,7 @@ if [[ $var -eq 1 ]]; then
   gpg --armor --export "${keyarr[index]}"
   new=${keyarr[index]}
 
-  setup
+  setup $new
 
 elif [[ $var -eq 2 ]]; then
   gpg --gen-key
@@ -57,7 +50,7 @@ elif [[ $var -eq 2 ]]; then
   new=$(echo "$key" | tail -c 17)
   gpg --armor --export "$new"
 
-  setup
+  setup $new
 
 elif [[ $var -eq 3 ]]; then
   break
