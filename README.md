@@ -2,15 +2,20 @@
 
 Level 0: cat readme
 - cat reads files
+
 Level 1: cat ./-
 - ./ reads files from the root directory and also allows dashes
+
 Level 2: cat spaces\ in\ this\ filename
 - use backslash to remove meaning from special characters
+
 Level 3: cat inhere/.hidden
 - used -a flag with ls to see hidden files
+
 Level 4: file ./-file0*
 - file command displays file type and -file0* is the regex that allows any text after "file0..."
 - i chose the file with ascii type
+
 Level 5: find  -size 1033c ! -executable
 -  size flag defines file size and ! -executable says that we dont want any files that are executable
 - 
@@ -21,14 +26,17 @@ Level 6: find / -user bandit7 -group bandit6 -size 33c 2>/dev/null
 
 Level 7: grep "millionth" data.txt
 - used grep to search for string in a file
+
 Level 8: cat data.txt | sort | uniq -u
 - used pipes to transfer output as input of the next command
 - the uniq command filters out adjacent repeated lines of text, the -u flag modifies the behaviour of the command to ensure that it only outputs the unique lines
+
 Level 9: couldnt solve, found the password 
 easily in the printed text
 
 Level 10: base64 -d data.txt
 - the base64 command along with -d flag decodes files
+
 Level 11: cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
 - the tr command is used to delete/transform characters of a string
 - the first string after the tr command represents the set of characters to be translated, we set the entire english alphabet (uppercase and lowercase characters)
