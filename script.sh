@@ -1,10 +1,15 @@
 #!/bin/bash
 
+function setup(){
+  git config --global user.signingkey "$new"
+  git config --global commit.gpgsign true
+}
+
 echo "1. Use an existing GPG key"
 echo "2. Create a new GPG key"
-read -p "Enter your choice: " val
+read -p "Enter your choice: " var
 
-if [[ $val -eq 1 ]]; then
+if [[ $var -eq 1 ]]; then
   key=$(gpg --list-secret-keys --keyid-format=long|awk '/sec/{print $2}')
   name=$(gpg --list-secret-keys --keyid-format=long|awk '/uid/{print $3}')
   declare -a keyarr
@@ -23,7 +28,7 @@ if [[ $val -eq 1 ]]; then
   for ((i=0; i<$keylen; i++)); do
     if [[ ${key:$i:1} == "/" ]]; then
       keyarr[$j]=${key:$i+1:16}
-      ((j++))
+      j=$((j+1))
     fi
   done
   
@@ -38,20 +43,19 @@ if [[ $val -eq 1 ]]; then
   read -p "Enter index: " index
 
   gpg --armor --export "${keyarr[index]}"
-  newKey=${keyarr[index]}
+  new=${keyarr[index]}
 
-  git config --global user.signingkey "$newKey"
-  git config --global commit.gpgsign true
+  setup
 
 elif [[ $val -eq 2 ]]; then
   gpg --gen-key
   key=$(gpg --list-secret-keys --keyid-format=long | awk '/sec/{print $2}')
-  newKey=$(echo "$key" | tail -c 16)
-  gpg --armor --export "$newKey"
+  new=$(echo "$key" | tail -c 17)
+  gpg --armor --export "$new"
 
-  git config --global user.signingkey "$newKey"
-  git config --global commit.gpgsign true
+  setup
 
 else
   echo "Invalid option"
 fi
+
