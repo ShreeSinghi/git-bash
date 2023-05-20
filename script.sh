@@ -5,8 +5,12 @@ function setup(){
   git config --global commit.gpgsign true
 }
 
+while [[ 1 -eq 1 ]]
+do
+
 echo "1. Use an existing GPG key"
 echo "2. Create a new GPG key"
+echo "3. Exit"
 read -p "Enter your choice: " var
 
 if [[ $var -eq 1 ]]; then
@@ -47,7 +51,7 @@ if [[ $var -eq 1 ]]; then
 
   setup
 
-elif [[ $val -eq 2 ]]; then
+elif [[ $var -eq 2 ]]; then
   gpg --gen-key
   key=$(gpg --list-secret-keys --keyid-format=long | awk '/sec/{print $2}')
   new=$(echo "$key" | tail -c 17)
@@ -55,7 +59,10 @@ elif [[ $val -eq 2 ]]; then
 
   setup
 
+elif [[ $var -eq 3 ]]; then
+  break
 else
   echo "Invalid option"
 fi
 
+done
