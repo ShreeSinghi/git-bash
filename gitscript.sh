@@ -1,9 +1,17 @@
 #!/bin/bash
 
 read -s -p "enter your super secure private secret confidential key: " key
-read -p "enter repo name: " repo_name
+
 read -p "enter description file name: " fname
 description=$(<"$fname")
+
+
+read -p "enter repo name: " repo_name
+# tries to match git.....yay
+while ! [[ "$repo_name" =~ ^git.*yay$ ]]
+do
+  read -p "enter repo name: " repo_name
+done
 
 git init
 
